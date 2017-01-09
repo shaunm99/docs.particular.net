@@ -46,8 +46,8 @@ namespace Core_6
         void ShowRouting(EndpointConfiguration endpointConfiguration)
         {
             #region RoutingSettings
-            var transport = endpointConfiguration.UseTransport<MsmqTransport>();
-            // Returns a RoutingSettings<MsmqTransport>
+            var transport = endpointConfiguration.UseTransport<SqlServerTransport>();
+            // Returns a RoutingSettings<SqlServerTransport>
             var routing = transport.Routing();
             #endregion
 
@@ -75,14 +75,10 @@ namespace Core_6
             var endpointConfiguration = new EndpointConfiguration("Sales");
             #endregion
 
+            var transport = endpointConfiguration.UseTransport<SqlServerTransport>();
+
             #region AddingRouting
-            // Change this:
-            endpointConfiguration.UseTransport<MsmqTransport>();
-
-            // To this:
-            var routing = endpointConfiguration.UseTransport<MsmqTransport>()
-                .Routing();
-
+            var routing = transport.Routing();
             routing.RouteToEndpoint(typeof(PlaceOrder), "Sales");
             #endregion
 
