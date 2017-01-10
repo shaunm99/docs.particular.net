@@ -16,7 +16,10 @@ namespace Sales
             Console.Title = "Sales";
 
             var endpointConfiguration = new EndpointConfiguration("Sales");
-            endpointConfiguration.UseTransport<MsmqTransport>();
+
+            var transport = endpointConfiguration.UseTransport<SqlServerTransport>();
+            transport.ConnectionString(@"Server=.\sqlexpress;Initial Catalog=NServiceBusAcademy;Trusted_Connection=true;");
+
             endpointConfiguration.UseSerialization<JsonSerializer>();
             endpointConfiguration.UsePersistence<InMemoryPersistence>();
             endpointConfiguration.SendFailedMessagesTo("error");

@@ -18,9 +18,10 @@ namespace Shipping
 
             var endpointConfiguration = new EndpointConfiguration("Shipping");
 
-            var transport = endpointConfiguration.UseTransport<MsmqTransport>();
-            var routing = transport.Routing();
+            var transport = endpointConfiguration.UseTransport<SqlServerTransport>();
+            transport.ConnectionString(@"Server=.\sqlexpress;Initial Catalog=NServiceBusAcademy;Trusted_Connection=true;");
 
+            var routing = transport.Routing();
             routing.RegisterPublisher(typeof(OrderPlaced), "Sales");
             routing.RegisterPublisher(typeof(OrderBilled), "Billing");
 
