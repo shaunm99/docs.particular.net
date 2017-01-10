@@ -28,24 +28,20 @@ namespace Core_6
     {
         void Setup(EndpointConfiguration endpointConfiguration)
         {
+            var transport = endpointConfiguration.UseTransport<SqlServerTransport>();
+
             #region RegisterPublisher
-
-            var transport = endpointConfiguration.UseTransport<MsmqTransport>();
             var routing = transport.Routing();
-
             routing.RegisterPublisher(typeof(SomethingHappened), "PublisherEndpoint");
             #endregion
         }
 
         void ExerciseConfig(EndpointConfiguration endpointConfiguration)
         {
-            #region BillingRouting
-            // Replace this:
-            endpointConfiguration.UseTransport<MsmqTransport>();
+            var transport = endpointConfiguration.UseTransport<SqlServerTransport>();
 
-            // With this:
-            var routing = endpointConfiguration.UseTransport<MsmqTransport>()
-                .Routing();
+            #region BillingRouting
+            var routing = transport.Routing();
             #endregion
 
             #region OrderPlacedPublisher

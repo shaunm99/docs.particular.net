@@ -18,9 +18,10 @@ namespace Billing
 
             var endpointConfiguration = new EndpointConfiguration("Billing");
 
-            var transport = endpointConfiguration.UseTransport<MsmqTransport>();
-            var routing = transport.Routing();
+            var transport = endpointConfiguration.UseTransport<SqlServerTransport>();
+            transport.ConnectionString(@"Server=.\sqlexpress;Initial Catalog=NServiceBusAcademy;Trusted_Connection=true;");
 
+            var routing = transport.Routing();
             routing.RegisterPublisher(typeof(OrderPlaced), "Sales");
 
             endpointConfiguration.UseSerialization<JsonSerializer>();
